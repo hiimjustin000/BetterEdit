@@ -20,7 +20,7 @@ using namespace keybinds;
 template <class F>
 class CCFunction : public CCObject {
 protected:
-    MiniFunction<F> m_func;
+    std::function<F> m_func;
 
 public:
     template <class F2>
@@ -108,7 +108,7 @@ struct $modify(ViewTabUI, EditorUI) {
         toggler->setUserObject("setter", CCFunction<void(bool)>::create(set));
         return toggler;
     }
-    CCMenuItemToggler* createViewToggleGV(const char* frame, const char* gv, MiniFunction<void(bool)> postSet = nullptr) {
+    CCMenuItemToggler* createViewToggleGV(const char* frame, const char* gv, std::function<void(bool)> postSet = nullptr) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
         auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
@@ -121,7 +121,7 @@ struct $modify(ViewTabUI, EditorUI) {
         }));
         return toggler;
     }
-    CCMenuItemToggler* createViewToggleMSV(const char* frame, const char* modSavedValue, MiniFunction<void(bool)> postSet = nullptr) {
+    CCMenuItemToggler* createViewToggleMSV(const char* frame, const char* modSavedValue, std::function<void(bool)> postSet = nullptr) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
         auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
@@ -163,7 +163,7 @@ struct $modify(ViewTabUI, EditorUI) {
         auto winSize = CCDirector::get()->getWinSize();
         
         // Make a bit space for new style menu since the old one is a tiny bit cramped
-        if (auto left = getChildOfType<CCSprite>(this, 1), right = getChildOfType<CCSprite>(this, 2); left && right) {
+        if (auto left = this->getChildByType<CCSprite>(1), right = this->getChildByType<CCSprite>(2); left && right) {
             left->setPositionX(winSize.width - right->getPositionX());
         }
         for (auto& child : CCArrayExt<CCNode*>(m_pChildren)) {

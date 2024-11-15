@@ -21,7 +21,7 @@ namespace be {
      * Create a view-only editor, i.e. one where no objects can be placed nor 
      * edited
      */
-    LevelEditorLayer* createViewOnlyEditor(GJGameLevel* level, utils::MiniFunction<CCLayer*()> returnTo);
+    LevelEditorLayer* createViewOnlyEditor(GJGameLevel* level, std::function<CCLayer*()> returnTo);
     /**
      * Check if the given editor is view-only
      */
@@ -66,6 +66,6 @@ public:
     UIShowFilter() = default;
     UIShowFilter(EditorUI* ui);
 
-    ListenerResult handle(MiniFunction<Callback> fn, UIShowEvent* ev);
+    ListenerResult handle(std::function<Callback> fn, UIShowEvent* ev);
 };
 using OnUIHide = EventListener<UIShowFilter>;

@@ -30,4 +30,4 @@
     #define BE_ALLOW_UNUSED_FUNCTION
 #endif
 
-#define $be_ensure_hookable(...) static_assert(requires { __VA_ARGS__; })
+#define $be_ensure_hookable(...) if (0) { return __VA_ARGS__; }

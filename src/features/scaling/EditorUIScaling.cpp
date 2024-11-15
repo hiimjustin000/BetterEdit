@@ -52,7 +52,7 @@ class $modify(BetterEditButtonBar, EditButtonBar) {
             setPositionX(winSize.width / 2);
             m_scrollLayer->setPositionX(-(winSize.width / 2));
 
-            if (auto menu = getChildOfType<CCMenu>(this, 0)) {
+            if (auto menu = this->getChildByType<CCMenu>(0)) {
                 menu->setVisible(false);
             
                 // easier to create a new menu than work with the old one
@@ -88,7 +88,7 @@ class $modify(BetterEditButtonBar, EditButtonBar) {
 
             // layout the pages and set their widths and heights according to the row and column counts, scale accordingly
             for (ButtonPage* page : CCArrayExt<ButtonPage*>(m_scrollLayer->m_pages)) {
-                if (CCMenu* buttonMenu = getChildOfType<CCMenu>(page, 0)) {
+                if (CCMenu* buttonMenu = page->getChildByType<CCMenu>(0)) {
                     RowLayout* layout = RowLayout::create();
                     layout->setAxisAlignment(AxisAlignment::Start);
                     layout->setCrossAxisAlignment(AxisAlignment::End);
@@ -132,7 +132,7 @@ class $modify(ScaledUI, EditorUI) {
         float scale = Mod::get()->getSettingValue<double>("scale-factor");
         auto size = CCDirector::get()->getWinSize();
 
-        if (auto slider = getChildOfType<Slider>(this, 0)) {
+        if (auto slider = this->getChildByType<Slider>(0)) {
             slider->ignoreAnchorPointForPosition(false);
             slider->setContentSize(ccp(0, 0));
             slider->setScale(scale);
@@ -189,9 +189,9 @@ class $modify(ScaledUI, EditorUI) {
         }
 
         // i am very sorry for using object indexes but no id
-        // doggo for the love of god at least use getChildOfType
+        // doggo for the love of god at least use getChildByType
 
-        if (auto objBG = getChildOfType<CCSprite>(this, 0)) {
+        if (auto objBG = this->getChildByType<CCSprite>(0)) {
             objBG->setScaleY(scale);
         }
 
@@ -220,12 +220,12 @@ class $modify(ScaledUI, EditorUI) {
             rightTabs->setScale(scale);
         }
 
-        if (auto leftLine = getChildOfType<CCSprite>(this, 1)) {
+        if (auto leftLine = this->getChildByType<CCSprite>(1)) {
             leftLine->setScale(scale);
             leftLine->setPosition(leftLine->getPosition() * scale);
         }
 
-        if (auto rightLine = getChildOfType<CCSprite>(this, 2)) {
+        if (auto rightLine = this->getChildByType<CCSprite>(2)) {
             rightLine->setScale(scale);
             rightLine->setPosition(ccp(size.width - (size.width - rightLine->getPositionX()) * scale, rightLine->getPositionY() * scale));
         }

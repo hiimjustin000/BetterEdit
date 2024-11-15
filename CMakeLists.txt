@@ -13,6 +13,15 @@ else()
 	message(STATUS "Including only free features, no Pro")
 endif()
 
+if (NOT SKIP_INCLUDING_LARGE_RESOURCES_FOR_SHORTER_BUILD_TIMES)
+	file(COPY_FILE
+		resources/support-popup/support-popup.png
+		resources/images/support-popup.png
+	)
+else()
+	file(REMOVE resources/images/support-popup.png)
+endif()
+
 file(GLOB SOURCES
 	src/features/*.cpp
 	src/features/scaling/*.cpp

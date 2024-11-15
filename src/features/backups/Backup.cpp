@@ -19,27 +19,22 @@ struct BackupMetadata final {
 
 template <>
 struct matjson::Serialize<BackupMetadata> {
-    static matjson::Value to_json(BackupMetadata const& meta) {
-		return matjson::Object({
+    static matjson::Value toJson(BackupMetadata const& meta) {
+		return matjson::makeObject({
 			{ "create-time", std::chrono::duration_cast<Backup::TimeUnit>(meta.createTime.time_since_epoch()).count() },
             { "automated", meta.automated },
 		});
 	}
-    static BackupMetadata from_json(matjson::Value const& value) {
+    static Result<BackupMetadata> fromJson(matjson::Value const& value) {
 		auto meta = BackupMetadata();
-		auto obj = value.as_object();
+		auto obj = checkJson(value, "BackupMetadata");
 
-        meta.createTime = Backup::TimePoint(Backup::TimeUnit(obj["create-time"].as_int()));
+        int createTime;
+        obj.needs("create-time").into(createTime);
+        meta.createTime = Backup::TimePoint(Backup::TimeUnit(createTime));
+        obj.has("automated").into(meta.automated);
 
-        // Parsing should be as fault-tolerant as possible
-        if (obj.contains("automated")) {
-            meta.automated = obj["automated"].as_bool();
-        }
-
-		return meta;
-	}
-	static bool is_json(matjson::Value const& value) {
-		return value.is_object();
+		return Ok(meta);
 	}
 };
 
@@ -85,12 +80,16 @@ Result<> Backup::preserveAutomated() {
         .createTime = m_createTime,
         .automated = false,
     };
-    GEODE_UNWRAP(file::writeToJson(m_directory / "meta.json", metadata).expect("Unable to save metadata: {error}"));
+    GEODE_UNWRAP(file::writeToJson(m_directory / "meta.json", metadata).mapErr([](auto error) {
+        return fmt::format("Unable to save metadata: {}", error);
+    }));
     return Ok();
 }
 
 Result<std::shared_ptr<Backup>> Backup::load(std::filesystem::path const& dir, GJGameLevel* forLevel) {
-    GEODE_UNWRAP_INTO(auto level, gmd::importGmdAsLevel(dir / "level.gmd").expect("Unable to read level file: {error}"));
+    GEODE_UNWRAP_INTO(auto level, gmd::importGmdAsLevel(dir / "level.gmd").mapErr([](auto error) {
+        return fmt::format("Unable to read level file: {}", error);
+    }));
     auto meta = file::readFromJson<BackupMetadata>(dir / "meta.json").unwrapOrDefault();
 
     auto backup = std::make_shared<Backup>();
@@ -133,15 +132,21 @@ Result<> Backup::create(GJGameLevel* level, bool automated) {
         return Err("Level was already backed up less than a minute ago");
     }
 
-    GEODE_UNWRAP(file::createDirectoryAll(dir).expect("Failed to create directory: {error}"));
+    GEODE_UNWRAP(file::createDirectoryAll(dir).mapErr([](auto error) {
+        return fmt::format("Failed to create directory: {}", error);
+    }));
 
-    GEODE_UNWRAP(gmd::exportLevelAsGmd(level, dir / "level.gmd").expect("Unable to save level: {error}"));
+    GEODE_UNWRAP(gmd::exportLevelAsGmd(level, dir / "level.gmd").mapErr([](auto error) {
+        return fmt::format("Unable to save level: {}", error);
+    }));
 
     auto metadata = BackupMetadata {
         .createTime = time,
         .automated = automated,
     };
-    GEODE_UNWRAP(file::writeToJson(dir / "meta.json", metadata).expect("Unable to save metadata: {error}"));
+    GEODE_UNWRAP(file::writeToJson(dir / "meta.json", metadata).mapErr([](auto error) {
+        return fmt::format("Unable to save metadata: {}", error);
+    }));
 
     return Ok();
 }

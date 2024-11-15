@@ -63,10 +63,10 @@ class $modify(GameManager) {
 //// View-only editor stuff
 class ViewOnlyModeData : public CCObject {
 protected:
-    utils::MiniFunction<CCLayer*()> m_returnTo;
+    std::function<CCLayer*()> m_returnTo;
 
 public:
-    static ViewOnlyModeData* create(utils::MiniFunction<CCLayer*()> returnTo) {
+    static ViewOnlyModeData* create(std::function<CCLayer*()> returnTo) {
         auto ret = new ViewOnlyModeData();
         ret->m_returnTo = returnTo;
         ret->autorelease();
@@ -78,7 +78,7 @@ public:
     }
 };
 
-LevelEditorLayer* be::createViewOnlyEditor(GJGameLevel* level, utils::MiniFunction<CCLayer*()> returnTo) {
+LevelEditorLayer* be::createViewOnlyEditor(GJGameLevel* level, std::function<CCLayer*()> returnTo) {
     auto editor = LevelEditorLayer::create(level, false);
     editor->setUserObject("view-only-mode"_spr, ViewOnlyModeData::create(returnTo));
 
@@ -227,7 +227,7 @@ class $modify(HideUI, EditorUI) {
 UIShowEvent::UIShowEvent(EditorUI* ui, bool show) : ui(ui), show(show) {}
 
 UIShowFilter::UIShowFilter(EditorUI* ui) : m_ui(ui) {}
-ListenerResult UIShowFilter::handle(MiniFunction<Callback> fn, UIShowEvent* ev) {
+ListenerResult UIShowFilter::handle(std::function<Callback> fn, UIShowEvent* ev) {
     if (m_ui == ev->ui) {
         fn(ev);
     }

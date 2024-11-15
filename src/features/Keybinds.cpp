@@ -61,7 +61,7 @@ struct $modify(EditorUI) {
             this->editGroup(nullptr);
         });
         this->defineKeybind("open-edit-special"_spr, [this]() {
-            this->editObject2(nullptr);
+            this->editObjectSpecial(0);
         });
         this->defineKeybind("copy-values"_spr, [this]() {
             this->onCopyState(nullptr);
