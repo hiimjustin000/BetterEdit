@@ -1,7 +1,7 @@
 # BetterEdit 6
 
 ## v6.9.0-alpha.1
- * Support for <cy>GD 2.2704</c> and <ca>Geode 4.0.0-beta.1</c> 
+ * Support for <cy>GD 2.2704</c> and <ca>Geode 4.0.0-beta.1</c>
 
 ## v6.8.0
  * Add <cd>Modifying Mixed Values</c> in the Group ID Popup (Editor Layers, Z Order, Channel)
