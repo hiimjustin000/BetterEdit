@@ -28,13 +28,11 @@ struct matjson::Serialize<BackupMetadata> {
     static Result<BackupMetadata> fromJson(matjson::Value const& value) {
 		auto meta = BackupMetadata();
 		auto obj = checkJson(value, "BackupMetadata");
-
         int createTime;
         obj.needs("create-time").into(createTime);
         meta.createTime = Backup::TimePoint(Backup::TimeUnit(createTime));
         obj.has("automated").into(meta.automated);
-
-		return Ok(meta);
+		return obj.ok(meta);
 	}
 };
 
