@@ -1,6 +1,11 @@
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/modify/GJScaleControl.hpp>
 #include <Geode/modify/GJRotationControl.hpp>
+#include <Geode/binding/ButtonSprite.hpp>
+#include <Geode/binding/Slider.hpp>
+#include <Geode/binding/GameManager.hpp>
+#include <Geode/binding/GameObject.hpp>
+#include <Geode/ui/TextInput.hpp>
 #include <utils/Editor.hpp>
 #include <numbers>
 #include <span>
@@ -171,7 +176,7 @@ class $modify(SnappableScaleControl, GJScaleControl) {
         inputX->setID("input-x"_spr);
         inputX->setPosition(30, m_scaleXLabel->getPositionY());
         inputX->setCommonFilter(CommonFilter::Float);
-        inputX->setCallback([this, inputX](auto const& str) {
+        inputX->setCallback([this](auto const& str) {
             if (auto scale = numFromString<float>(str)) {
                 m_delegate->scaleXChanged(*scale, m_scaleLocked);
                 m_sliderX->setValue(this->valueFromScale(*scale));
@@ -184,7 +189,7 @@ class $modify(SnappableScaleControl, GJScaleControl) {
         inputY->setID("input-y"_spr);
         inputY->setPosition(30, m_scaleYLabel->getPositionY());
         inputY->setCommonFilter(CommonFilter::Float);
-        inputY->setCallback([this, inputY](auto const& str) {
+        inputY->setCallback([this](auto const& str) {
             if (auto scale = numFromString<float>(str)) {
                 m_delegate->scaleYChanged(*scale, m_scaleLocked);
                 m_sliderY->setValue(this->valueFromScale(*scale));
@@ -197,7 +202,7 @@ class $modify(SnappableScaleControl, GJScaleControl) {
         inputXY->setID("input-xy"_spr);
         inputXY->setPosition(25, m_scaleLabel->getPositionY());
         inputXY->setCommonFilter(CommonFilter::Float);
-        inputXY->setCallback([this, inputXY](auto const& str) {
+        inputXY->setCallback([this](auto const& str) {
             if (auto scale = numFromString<float>(str)) {
                 m_delegate->scaleXYChanged(*scale, *scale, m_scaleLocked);
                 m_sliderXY->setValue(this->valueFromScale(*scale));
@@ -385,7 +390,7 @@ class $modify(InputRotationControl, GJRotationControl) {
         input->setID("input-angle"_spr);
         input->setPosition(110, 0);
         input->setCommonFilter(CommonFilter::Float);
-        input->setCallback([this, input](auto const& str) {
+        input->setCallback([this](auto const& str) {
             if (auto angle = numFromString<float>(str)) {
                 m_delegate->angleChangeBegin();
                 m_delegate->angleChanged(*angle);

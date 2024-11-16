@@ -2,6 +2,8 @@
 #include <Geode/modify/GameManager.hpp>
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/modify/EditorPauseLayer.hpp>
+#include <Geode/binding/EditButtonBar.hpp>
+#include <Geode/binding/CCTextInputNode.hpp>
 #include <utils/Warn.hpp>
 
 // i hate touch prioi hate touch prioi hate touch prioi hate touch prioi hate 

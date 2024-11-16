@@ -54,7 +54,7 @@ else()
     message(STATUS "Found Geode: $ENV{GEODE_SDK}")
 endif()
 
-add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
+add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode SYSTEM)
 
 setup_geode_mod(${PROJECT_NAME})
 
@@ -70,5 +70,9 @@ else()
 		-Wno-dollar-in-identifier-extension
 		# Class init functions all overload a virtual
 		-Wno-overloaded-virtual
+		# GEODE_UNWRAP
+		-Wno-gnu-statement-expression-from-macro-expansion
+		# Style "IDC"s
+		-Wno-extra-semi
 	)
 endif()

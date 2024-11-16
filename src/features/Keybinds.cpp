@@ -6,6 +6,8 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/binding/EditButtonBar.hpp>
+#include <Geode/binding/GameManager.hpp>
+#include <Geode/ui/Notification.hpp>
 #include <utils/Editor.hpp>
 #include <utils/HolyUB.hpp>
 #include "GridScaling.hpp"

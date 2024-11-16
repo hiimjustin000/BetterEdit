@@ -2,6 +2,8 @@
 #include <Geode/modify/EditorPauseLayer.hpp>
 #include <Geode/modify/GManager.hpp>
 #include <Geode/modify/MenuLayer.hpp>
+#include <Geode/binding/LocalLevelManager.hpp>
+#include <Geode/binding/FLAlertLayer.hpp>
 #include <cvolton.level-id-api/include/EditorIDs.hpp>
 #include <hjfod.gmd-api/include/GMD.hpp>
 #include <utils/HolyUB.hpp>

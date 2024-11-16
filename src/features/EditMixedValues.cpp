@@ -1,7 +1,12 @@
 #include <Geode/modify/SetGroupIDLayer.hpp>
 #include <Geode/modify/SetupTriggerPopup.hpp>
 #include <Geode/modify/SetupRotateCommandPopup.hpp>
+#include <Geode/binding/GameObject.hpp>
+#include <Geode/binding/ButtonSprite.hpp>
+#include <Geode/binding/EffectGameObject.hpp>
 #include <Geode/utils/cocos.hpp>
+#include <Geode/utils/string.hpp>
+#include <Geode/ui/TextInput.hpp>
 
 using namespace geode::prelude;
 

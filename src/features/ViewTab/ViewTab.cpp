@@ -3,12 +3,12 @@
 #include <Geode/modify/GameObject.hpp>
 #include <Geode/modify/DrawGridLayer.hpp>
 #include <Geode/modify/FMODAudioEngine.hpp>
-
 #include <Geode/binding/LevelEditorLayer.hpp>
 #include <Geode/binding/CCMenuItemSpriteExtra.hpp>
 #include <Geode/binding/ButtonSprite.hpp>
 #include <Geode/binding/EditButtonBar.hpp>
 #include <Geode/binding/GameManager.hpp>
+#include <Geode/binding/GJGroundLayer.hpp>
 #include <Geode/utils/cocos.hpp>
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #include <utils/Editor.hpp>

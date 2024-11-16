@@ -5,6 +5,7 @@
 #include <Geode/binding/CCMenuItemSpriteExtra.hpp>
 #include <Geode/binding/LevelEditorLayer.hpp>
 #include <Geode/binding/GameManager.hpp>
+#include <Geode/binding/GameObject.hpp>
 #include <utils/Editor.hpp>
 #include <utils/Pro.hpp>
 

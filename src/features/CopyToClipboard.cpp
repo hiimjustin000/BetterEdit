@@ -1,6 +1,7 @@
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/utils/general.hpp>
 #include <Geode/ui/Notification.hpp>
+#include <Geode/binding/GameManager.hpp>
 
 using namespace geode::prelude;
 

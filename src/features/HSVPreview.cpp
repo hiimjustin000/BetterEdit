@@ -2,6 +2,12 @@
 #include <Geode/modify/HSVWidgetPopup.hpp>
 #include <Geode/modify/CustomizeObjectLayer.hpp>
 #include <Geode/modify/ColorSelectPopup.hpp>
+#include <Geode/binding/LevelEditorLayer.hpp>
+#include <Geode/binding/GameToolbox.hpp>
+#include <Geode/binding/EffectGameObject.hpp>
+#include <Geode/binding/ColorAction.hpp>
+#include <Geode/binding/LevelSettingsObject.hpp>
+#include <Geode/binding/GJEffectManager.hpp>
 
 using namespace geode::prelude;
 
