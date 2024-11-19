@@ -320,7 +320,7 @@ public:
     }
 };
 
-class $modify(EditorUI) {
+class $modify(MoreButtonsUI, EditorUI) {
     $override
     bool init(LevelEditorLayer* editor) {
         if (!EditorUI::init(editor))
@@ -356,10 +356,15 @@ class $modify(EditorUI) {
     }
 
     void addMoveButton(const char* id, const char* spr, EditCommand command) {
-        auto btn = this->getSpriteButton(spr, menu_selector(EditorUI::moveObjectCall), nullptr, .9f);
+        auto btn = this->getSpriteButton(spr, menu_selector(MoreButtonsUI::onMyMoveObject), nullptr, .9f);
         btn->setID(id);
         btn->setTag(static_cast<int>(command));
         m_editButtonBar->m_buttonArray->addObject(btn);
+    }
+
+    // EditorUI::moveObjectCall was resolving to the wrong callback for some reason
+    void onMyMoveObject(CCObject* sender) {
+        this->moveObjectCall(static_cast<EditCommand>(sender->getTag()));
     }
 
     $override

@@ -1,5 +1,8 @@
 # BetterEdit 6
 
+## v6.9.1
+ * Fix <cj>1/4</c>, <cj>1/8</c>, and <cj>Pixel</c> moving buttons not working
+
 ## v6.9.0
  * Add <cy>LDM Object Count</c> to the pause menu
  * Fix <cp>Supporter</c> names overflowing
