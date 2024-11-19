@@ -1,6 +1,6 @@
 # BetterEdit 6
 
-## v6.9.0-alpha.2
+## v6.9.0
  * Add <cy>LDM Object Count</c> to the pause menu
 
 ## v6.9.0-alpha.1

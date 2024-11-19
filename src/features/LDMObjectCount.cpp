@@ -5,6 +5,7 @@
 using namespace geode::prelude;
 
 class $modify(EditorPauseLayer) {
+    $override
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel))
             return false;
