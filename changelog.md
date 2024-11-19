@@ -2,6 +2,7 @@
 
 ## v6.9.1
  * Fix <cj>1/4</c>, <cj>1/8</c>, and <cj>Pixel</c> moving buttons not working
+ * Temporarily <cr>remove Android support</c> as there appears to be a bug in Geode itself causing crashes. Sorry :(
 
 ## v6.9.0
  * Add <cy>LDM Object Count</c> to the pause menu
