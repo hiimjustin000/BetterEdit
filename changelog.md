@@ -2,6 +2,7 @@
 
 ## v6.9.0
  * Add <cy>LDM Object Count</c> to the pause menu
+ * Fix <cp>Supporter</c> names overflowing
 
 ## v6.9.0-alpha.1
  * Support for <cy>GD 2.2704</c> and <ca>Geode 4.0.0-beta.1</c>
