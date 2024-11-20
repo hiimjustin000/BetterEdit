@@ -17,9 +17,18 @@ struct ValueLimits final {
     constexpr ValueLimits() : min(std::numeric_limits<T>::min()), max(std::numeric_limits<T>::max()) {}
     constexpr ValueLimits(T value) : min(value), max(value) {}
     constexpr ValueLimits(T min, T max) : min(min), max(max) {}
+    static constexpr ValueLimits infToInf() {
+        return ValueLimits(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+    }
     static constexpr ValueLimits zeroToInf() {
         return ValueLimits(0, std::numeric_limits<T>::max());
     }
+};
+
+enum class Direction {
+    Decrement,
+    Increment,
+    Reset,
 };
 
 template <class T>
@@ -31,10 +40,7 @@ struct MixedValuesConfig final {
     };
     Type (*getDefault)(GameObject*);
     Type (*get)(GameObject*);
-    void (*set)(GameObject*, Type);
-    bool (*shouldSkipZero)(GameObject*) = +[](GameObject*) {
-        return false;
-    };
+    Type (*set)(GameObject*, Type, Direction);
 };
 
 template <class T>
@@ -82,7 +88,7 @@ protected:
 
         m_input = TextInput::create(50, "Num");
         m_input->setCallback([this](std::string const& text) {
-            this->override(numFromString<T>(text).unwrapOr(0));
+            this->override(numFromString<T>(text).unwrapOr(0), false);
         });
         m_input->setCommonFilter(CommonFilter::Int);
         this->addChildAtPosition(m_input, Anchor::Center, ccp(0, -10));
@@ -139,10 +145,7 @@ protected:
                 m_config.get(obj) + sender->getTag(),
                 m_config.limits.min, m_config.limits.max
             );
-            if (m_config.shouldSkipZero(obj) && val == 0) {
-                val = sender->getTag() > 0 ? 1 : -1;
-            }
-            m_config.set(obj, val);
+            m_config.set(obj, val, sender->getTag() > 0 ? Direction::Increment : Direction::Decrement);
         }
         this->updateLabel();
     }
@@ -172,11 +175,13 @@ protected:
         }
         return false;
     }
-    void override(T value) {
+    void override(T value, bool updateLabel = true) {
         for (auto obj : m_targets) {
-            m_config.set(obj, clamp(value, m_config.limits.min, m_config.limits.max));
+            m_config.set(obj, clamp(value, m_config.limits.min, m_config.limits.max), Direction::Reset);
         }
-        this->updateLabel();
+        if (updateLabel) {
+            this->updateLabel();
+        }
     }
 
     ValueLimits<T> getMinMax() const {
@@ -274,8 +279,9 @@ class $modify(SetGroupIDLayer) {
                 .get = +[](GameObject* obj) {
                     return obj->m_editorLayer;
                 },
-                .set = +[](GameObject* obj, short value) {
+                .set = +[](GameObject* obj, short value, Direction) {
                     obj->m_editorLayer = value;
+                    return value;
                 },
             },
             "Editor L", "GJ_arrow_02_001.png", true
@@ -290,8 +296,9 @@ class $modify(SetGroupIDLayer) {
                 .get = +[](GameObject* obj) {
                     return obj->m_editorLayer2;
                 },
-                .set = +[](GameObject* obj, short value) {
+                .set = +[](GameObject* obj, short value, Direction) {
                     obj->m_editorLayer2 = value;
+                    return value;
                 },
             },
             "Editor L2", "GJ_arrow_03_001.png", true
@@ -299,18 +306,30 @@ class $modify(SetGroupIDLayer) {
         
         MixedValuesInput<int>::create(
             obj, objs, MixedValuesConfig<int> {
-                .limits = ValueLimits<int>(-999, 999),
+                .limits = ValueLimits<int>::infToInf(),
                 .getDefault = +[](GameObject* obj) {
                     return obj->m_defaultZOrder;
                 },
                 .get = +[](GameObject* obj) {
                     return obj->m_zOrder == 0 ? obj->m_defaultZOrder : obj->m_zOrder;
                 },
-                .set = +[](GameObject* obj, int value) {
-                    obj->m_zOrder = value;
-                },
-                .shouldSkipZero = +[](GameObject* obj) {
-                    return obj->m_defaultZOrder != 0;
+                .set = +[](GameObject* obj, int value, Direction increment) {
+                    if (
+                        // Skip 0 for objects with non-zero default value
+                        (obj->m_defaultZOrder != 0 && value == 0) ||
+                        // Skip -1000 as it stands for Mixed
+                        value == -1000
+                    ) {
+                        switch (increment) {
+                            case Direction::Reset: obj->m_zOrder = obj->m_defaultZOrder; break;
+                            case Direction::Decrement: obj->m_zOrder = value - 1; break;
+                            case Direction::Increment: obj->m_zOrder = value + 1; break;
+                        }
+                    }
+                    else {
+                        obj->m_zOrder = value;
+                    }
+                    return obj->m_zOrder;
                 },
             },
             "Z Order", "GJ_arrow_02_001.png", false
@@ -329,8 +348,9 @@ class $modify(SetGroupIDLayer) {
                     .get = +[](GameObject* obj) {
                         return static_cast<EffectGameObject*>(obj)->m_ordValue;
                     },
-                    .set = +[](GameObject* obj, int value) {
+                    .set = +[](GameObject* obj, int value, Direction) {
                         static_cast<EffectGameObject*>(obj)->m_ordValue = value;
+                        return value;
                     }
                 },
                 nullptr, "GJ_arrow_02_001.png", false
@@ -349,8 +369,9 @@ class $modify(SetGroupIDLayer) {
                     .get = +[](GameObject* obj) {
                         return static_cast<EffectGameObject*>(obj)->m_channelValue;
                     },
-                    .set = +[](GameObject* obj, int value) {
+                    .set = +[](GameObject* obj, int value, Direction) {
                         static_cast<EffectGameObject*>(obj)->m_channelValue = value;
+                        return value;
                     }
                 },
                 nullptr, "GJ_arrow_02_001.png", false
