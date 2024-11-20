@@ -1,5 +1,9 @@
 # BetterEdit 6
 
+## v6.9.2
+ * Remove limits from <ca>Z Order</c>
+ * Add back <cg>Android support</c> :)
+
 ## v6.9.1
  * Fix <cj>1/4</c>, <cj>1/8</c>, and <cj>Pixel</c> moving buttons not working
  * Temporarily <cr>remove Android support</c> as there appears to be a bug in Geode itself causing crashes. Sorry :(
