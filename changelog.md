@@ -1,5 +1,8 @@
 # BetterEdit 6
 
+## v6.10.0
+ * Add <cj>Trigger Indicators</c>
+
 ## v6.9.2
  * Remove limits from <ca>Z Order</c>
  * Add back <cg>Android support</c> :)
