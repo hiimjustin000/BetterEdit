@@ -1,9 +1,6 @@
 #pragma once
 
 namespace be {
+    bool isProEnabled();
     bool isProUIEnabled();
 }
-
-#ifdef BETTEREDIT_PRO
-#include <pro/Pro.hpp>
-#endif

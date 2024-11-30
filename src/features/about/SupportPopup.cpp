@@ -4,6 +4,10 @@
 #include <Geode/binding/ButtonSprite.hpp>
 #include <utils/Pro.hpp>
 
+#ifdef BETTEREDIT_PRO
+#include <pro/Pro.hpp>
+#endif
+
 bool SupportPopup::setup(bool showDontShowAgain) {
     m_bgSprite->setVisible(false);
 

@@ -1,7 +1,8 @@
 # BetterEdit 6
 
-## v6.10.0
- * Add <cj>Trigger Indicators</c>
+## v6.10.0-alpha.1
+ * Add <cj>Trigger Indicators</c> (toggleable in <cc>View Tab</c>)
+ * Make Alpha's mods only Suggested instead of Recommended (so they aren't auto-installed)
 
 ## v6.9.2
  * Remove limits from <ca>Z Order</c>

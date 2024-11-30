@@ -1,6 +1,6 @@
 {
 	"geode": "4.0.1",
-	"version": "6.10.0",
+	"version": "6.10.0-alpha.1",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
@@ -44,22 +44,22 @@
 		{
 			"id": "hjfod.backups",
 			"version": "1.0.0",
-			"importance": "recommended"
+			"importance": "suggested"
 		},
 		{
 			"id": "alphalaneous.awesome_modifier_icons",
 			"version": "1.0.3",
-			"importance": "recommended"
+			"importance": "suggested"
 		},
 		{
 			"id": "alphalaneous.improvedlink",
 			"version": "1.0.5",
-			"importance": "recommended"
+			"importance": "suggested"
 		},
 		{
 			"id": "alphalaneous.improved_group_view",
 			"version": "1.0.5",
-			"importance": "recommended"
+			"importance": "suggested"
 		}
     ],
 	"resources": {

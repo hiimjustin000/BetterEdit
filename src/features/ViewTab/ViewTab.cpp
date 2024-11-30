@@ -13,6 +13,7 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #include <utils/Editor.hpp>
 #include <utils/HolyUB.hpp>
+#include <utils/Pro.hpp>
 
 using namespace geode::prelude;
 using namespace keybinds;
@@ -121,12 +122,15 @@ struct $modify(ViewTabUI, EditorUI) {
         }));
         return toggler;
     }
-    CCMenuItemToggler* createViewToggleMSV(const char* frame, const char* modSavedValue, std::function<void(bool)> postSet = nullptr) {
+    CCMenuItemToggler* createViewToggleMSV(
+        const char* frame, const char* modSavedValue,
+        bool defaultValue = false, std::function<void(bool)> postSet = nullptr
+    ) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
         auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
-        toggler->setUserObject("getter", CCFunction<bool()>::create([modSavedValue]() {
-            return Mod::get()->template getSavedValue<bool>(modSavedValue);
+        toggler->setUserObject("getter", CCFunction<bool()>::create([modSavedValue, defaultValue]() {
+            return Mod::get()->template getSavedValue<bool>(modSavedValue, defaultValue);
         }));
         toggler->setUserObject("setter", CCFunction<void(bool)>::create([modSavedValue, postSet](bool enabled) {
             Mod::get()->setSavedValue(modSavedValue, enabled);
@@ -219,7 +223,7 @@ struct $modify(ViewTabUI, EditorUI) {
             m_editorLayer->updatePreviewParticles();
         }));
         btns->addObject(this->createViewToggleGV("v_shaders.png"_spr, "0158"));
-        btns->addObject(this->createViewToggleMSV("v_ldm.png"_spr, "hide-ldm", [this](bool) {
+        btns->addObject(this->createViewToggleMSV("v_ldm.png"_spr, "hide-ldm", false, [this](bool) {
             for (auto obj : CCArrayExt<GameObjectExtra*>(m_editorLayer->m_objects)) {
                 obj->updateVisibility();
             }
@@ -243,6 +247,14 @@ struct $modify(ViewTabUI, EditorUI) {
         btns->addObject(this->createViewToggleMSV("v_pos_line.png"_spr, "pos-line"));
         btns->addObject(this->createViewToggleGV("v_dur_line.png"_spr, "0058"));
         btns->addObject(this->createViewToggleGV("v_eff_line.png"_spr, "0043"));
+        
+        if (be::isProEnabled()) {
+            btns->addObject(this->createViewToggleMSV("v_indicators.png"_spr, "show-trigger-indicators", true));
+            // todo: disable this if show-trigger-indicators is disabled
+            btns->addObject(this->createViewToggleMSV("v_indicators_all.png"_spr, "show-all-trigger-indicators"));
+        }
+        // todo: show trigger indicators as disabled for non-pro users
+
         btns->addObject(this->createViewToggleGV("v_ground.png"_spr, "0037", [this](bool enable) {
             m_editorLayer->m_groundLayer->setVisible(enable);
         }));
