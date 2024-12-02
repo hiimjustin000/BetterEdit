@@ -2,7 +2,9 @@
 #include <Geode/modify/GameManager.hpp>
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/modify/EditorPauseLayer.hpp>
+#include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/binding/EditButtonBar.hpp>
+#include <Geode/binding/GameObject.hpp>
 #include <Geode/binding/CCTextInputNode.hpp>
 #include <utils/Warn.hpp>
 
@@ -234,4 +236,33 @@ ListenerResult UIShowFilter::handle(std::function<Callback> fn, UIShowEvent* ev)
         fn(ev);
     }
     return ListenerResult::Propagate;
+}
+
+class $modify(TintLayer, LevelEditorLayer) {
+    struct Fields {
+        std::unordered_map<Ref<GameObject>, ccColor3B> tinted {};
+    };
+
+    $override
+    void updateVisibility(float dt) {
+        LevelEditorLayer::updateVisibility(dt);
+        for (auto [obj, color] : m_fields->tinted) {
+            obj->setObjectColor(color);
+            // if (m_detailSprite) {
+            //     m_detailSprite->setColor(color);
+            //     m_detailSprite->setChildColor(color);
+            // }
+        }
+    }
+};
+
+void be::tintObject(GameObject* obj, std::optional<ccColor3B> const& color) {
+    auto lel = static_cast<TintLayer*>(LevelEditorLayer::get());
+    if (color) {
+        lel->m_fields->tinted.insert({ obj, *color });
+        obj->setObjectColor(*color);
+    }
+    else {
+        lel->m_fields->tinted.erase(obj);
+    }
 }

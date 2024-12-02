@@ -204,6 +204,24 @@
 			"name": "Supporter Settings",
 			"description": "These settings are for features only available to <cp>Supporters</c>. Support BetterEdit to get access!"
 		},
+		"trigger-indicator-colors": {
+			"type": "string",
+			"one-of": ["None", "Selected Only", "All"],
+			"default": "Selected Only",
+			"name": "Dynamic Trigger Indicator Colors",
+			"description": "Control whether <cj>Trigger Indicators</c> should be colored based on the trigger, or if they should just be white"
+		},
+		"trigger-indicators-color-objects": {
+			"type": "bool",
+			"default": false,
+			"name": "Trigger Indicator Color Selection",
+			"description": "Control whether <cj>Trigger Indicators</c> should also color the target objects, or only point to them via the line"
+		},
+		"wip-section": {
+			"type": "title",
+			"name": "WIP Features",
+			"description": "These settings are for features that are currently Work-In-Progress. This means that <cr>these features may be unstable and unusable</c>, and are only included for testing purposes. <ca>Developer Mode</c> is required to enable them."
+		},
 		"better-select": {
 			"type": "bool",
 			"default": false,

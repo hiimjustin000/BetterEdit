@@ -26,6 +26,10 @@ namespace be {
      * Check if the given editor is view-only
      */
     bool isViewOnlyEditor(LevelEditorLayer* lel);
+    /**
+     * Color an object like selecting (without changing its actual color)
+     */
+    void tintObject(GameObject* obj, std::optional<ccColor3B> const& color);
 }
 
 //// More EditCommand options
