@@ -266,3 +266,18 @@ void be::tintObject(GameObject* obj, std::optional<ccColor3B> const& color) {
         lel->m_fields->tinted.erase(obj);
     }
 }
+
+void be::enableButton(CCMenuItemSpriteExtra* btn, bool enabled) {
+    btn->setEnabled(enabled);
+    if (auto spr = typeinfo_cast<CCRGBAProtocol*>(btn->getNormalImage())) {
+        spr->setCascadeColorEnabled(true);
+        spr->setCascadeOpacityEnabled(true);
+        spr->setColor(enabled ? ccWHITE : ccGRAY);
+        spr->setOpacity(enabled ? 255 : 200);
+    }
+}
+void be::enableToggle(CCMenuItemToggler* toggle, bool enabled) {
+    toggle->setEnabled(enabled);
+    be::enableButton(toggle->m_onButton, enabled);
+    be::enableButton(toggle->m_offButton, enabled);
+}

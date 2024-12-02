@@ -30,6 +30,9 @@ namespace be {
      * Color an object like selecting (without changing its actual color)
      */
     void tintObject(GameObject* obj, std::optional<ccColor3B> const& color);
+
+    void enableButton(CCMenuItemSpriteExtra* btn, bool enabled);
+    void enableToggle(CCMenuItemToggler* toggle, bool enabled);
 }
 
 //// More EditCommand options

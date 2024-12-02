@@ -248,12 +248,21 @@ struct $modify(ViewTabUI, EditorUI) {
         btns->addObject(this->createViewToggleGV("v_dur_line.png"_spr, "0058"));
         btns->addObject(this->createViewToggleGV("v_eff_line.png"_spr, "0043"));
         
-        if (be::isProEnabled()) {
-            btns->addObject(this->createViewToggleMSV("v_indicators.png"_spr, "show-trigger-indicators", true));
-            // todo: disable this if show-trigger-indicators is disabled
-            btns->addObject(this->createViewToggleMSV("v_indicators_all.png"_spr, "show-all-trigger-indicators"));
+        auto indAllToggle = this->createViewToggleMSV("v_indicators_all.png"_spr, "show-all-trigger-indicators");
+        auto indToggle = this->createViewToggleMSV(
+            "v_indicators.png"_spr, "show-trigger-indicators", be::isProEnabled(),
+            [indAllToggle](bool enabled) {
+                be::enableToggle(indAllToggle, enabled);
+            }
+        );
+        btns->addObject(indToggle);
+        btns->addObject(indAllToggle);
+
+        // todo: add popup explaining why they're not available
+        if (!be::isProEnabled()) {
+            be::enableToggle(indToggle, false);
+            be::enableToggle(indAllToggle, false);
         }
-        // todo: show trigger indicators as disabled for non-pro users
 
         btns->addObject(this->createViewToggleGV("v_ground.png"_spr, "0037", [this](bool enable) {
             m_editorLayer->m_groundLayer->setVisible(enable);

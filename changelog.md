@@ -1,5 +1,9 @@
 # BetterEdit 6
 
+## v6.10.0-alpha.2
+ * <cj>Trigger Indicators</c> are now the same color as the targeting triggers & now show Center Groups
+ * Some minor visual fixes (thank you to Alphalaneous!)
+
 ## v6.10.0-alpha.1
  * Add <cj>Trigger Indicators</c> (toggleable in <cc>View Tab</c>)
  * Make Alpha's mods only Suggested instead of Recommended (so they aren't auto-installed)
