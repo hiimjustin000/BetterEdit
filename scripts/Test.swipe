@@ -1,0 +1,11 @@
+
+@version 1.0
+@name "Swipe test"
+@by "HJfod"
+
+function vararg(named, x, y, args...) {
+    // todo: why tf is this not just args[0], args[1]??? why is args not just an array???
+    print("named: {}, x: {}, y: {}, argument0: {}, argument1: {}", argument0, argument1)
+}
+
+vararg("hi", 5, true, "six", y = 6, ball)

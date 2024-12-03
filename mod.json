@@ -63,6 +63,9 @@
 		}
     ],
 	"resources": {
+		"files": [
+			"scripts/*.swipe"
+		],
 		"spritesheets": {
 			"UISheet": [
 				"resources/*.png"
