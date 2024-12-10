@@ -1,6 +1,6 @@
 {
-	"geode": "4.0.1",
-	"version": "6.10.0-alpha.2",
+	"geode": "4.1.0",
+	"version": "6.10.0-alpha.3",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
@@ -224,6 +224,14 @@
 			"type": "title",
 			"name": "WIP Features",
 			"description": "These settings are for features that are currently Work-In-Progress. This means that <cr>these features may be unstable and unusable</c>, and are only included for testing purposes. <ca>Developer Mode</c> is required to enable them."
+		},
+		"run-script-button": {
+			"type": "bool",
+			"default": false,
+			"name": "Run Script Button (WIP)",
+			"description": "<cr>THIS FEATURE IS HEAVILY WIP</c>",
+			"enable-if": "dev-mode",
+			"enable-if-description": "This Feature is Heavily WIP!"
 		},
 		"better-select": {
 			"type": "bool",

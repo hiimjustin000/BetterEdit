@@ -101,6 +101,9 @@ struct $modify(EditorUI) {
         this->defineKeybind("build-helper"_spr, [this]() {
             fakeEditorPauseLayer(m_editorLayer)->onBuildHelper(nullptr);
         });
+        this->defineKeybind("create-loop"_spr, [this]() {
+            fakeEditorPauseLayer(m_editorLayer)->onCreateLoop(nullptr);
+        });
         this->defineKeybind("align-x"_spr, [this]() {
             fakeEditorPauseLayer(m_editorLayer)->onAlignX(nullptr);
         });
@@ -232,6 +235,14 @@ $execute {
         "Build Helper",
         "Executes the <cy>Build Helper</c> feature, aka remaps Groud and Color "
         "IDs of the selected objects to unused ones",
+        {},
+        Category::EDITOR_MODIFY,
+        false
+    ));
+    BindManager::get()->registerBindable(BindableAction(
+        "create-loop"_spr,
+        "Create loop",
+        "Executes the <cy>Create Loop</c> feature, aka makes a Spawn Trigger loop",
         {},
         Category::EDITOR_MODIFY,
         false

@@ -1,12 +1,21 @@
 # BetterEdit 6
 
+## v6.10.0-alpha.3
+ * Add <cl>Create Loop</c> keybind
+ * Fix <cj>Build Helper</c> keybind actually creating a loop
+ * Fix <co>32-bit Android crashing upon entering the editor</c>
+
 ## v6.10.0-alpha.2
- * <cj>Trigger Indicators</c> are now the same color as the targeting triggers & now show Center Groups
  * Some minor visual fixes (thank you to Alphalaneous!)
 
+#### <cp>Supporter Features</c>
+ * <cj>Trigger Indicators</c> are now the same color as the targeting triggers & now show Center Groups
+
 ## v6.10.0-alpha.1
- * Add <cj>Trigger Indicators</c> (toggleable in <cc>View Tab</c>)
  * Make Alpha's mods only Suggested instead of Recommended (so they aren't auto-installed)
+
+#### <cp>Supporter Features</c>
+ * Add <cj>Trigger Indicators</c> (toggleable in <cc>View Tab</c>)
 
 ## v6.9.2
  * Remove limits from <ca>Z Order</c>
@@ -36,50 +45,56 @@
  * Add <cg>Alpha's Editor Mods</c> as Recommendations :3
  * Make the build tabs responsive to screen size (huge thank you to <cg>Alphalaneous</c>!)
  * Fix <cc>View Tab LDM</c> being applied outside the editor
+ 
+#### <cp>Supporter Features</c>
  * <cp>Supporters</c> can now link their account to be <cb>listed in-game</c>
 
-### v6.8.0-beta.4
+## v6.8.0-beta.4
  * Add option for <cy>Hide Trigger Popup BG when Modifying Slider</c> to all triggers (huge thank you to <cp>TheSillyDoggo</c>!)
  * Add option for changing the snap size on the Scale and Rotate Controls
  * Make the build tabs responsive to screen size (huge thank you to <cg>Alphalaneous</c>!)
  * Fix <cc>View Tab LDM</c> being applied outside the editor
 
-### v6.8.0-beta.3
+## v6.8.0-beta.3
  * Add <co>Toggle Scale X/Y Control</c> and <cp>Toggle Warp Control</c> keybinds
  * <cd>Mixed values</c> now show the range of the values rather than just "Mixed"
  * Fix <ca>Z order values</c> being falsely set to 0 even though that's not possible
  * Fix <cr>Toggle Scale Control</c> keybind crashing
 
-### v6.8.0-beta.2
+## v6.8.0-beta.2
  * Fix being able to place objects through the Z layer input
 
-### v6.8.0-beta.1
+## v6.8.0-beta.1
  * Release candidate; minor internal fixes & UI tweaks
 
-### v6.8.0-alpha.7
+## v6.8.0-alpha.7
  * Add <cg>Scale Snapping</c>
  * Add <ca>Rotation Snapping</c> and <cc>Lock Object Position During Rotation</c>
  * Add <co>Input Rotation Degrees</c>
  * Add <cb>Copy/Paste to/from System Clipboard</c>
  * Add <cg>Alpha's Editor Mods</c> as Recommendations :3
 
-### v6.8.0-alpha.6
+## v6.8.0-alpha.6
  * Add inputs for <cb>Scale</c>, <cg>Scale X</c>, and <co>Scale Y</c>
 
-### v6.8.0-alpha.5
+## v6.8.0-alpha.5
  * Fix color trigger popup crashing (& also make <cc>HSV Preview</c> more responsive)
 
-### v6.8.0-alpha.4
+## v6.8.0-alpha.4
  * Fix a bug with servers causing supporter popups to not work
 
-### v6.8.0-alpha.3
+## v6.8.0-alpha.3
  * Add <cc>HSV Preview</c>
- * <cg>Better Warp Selection</c> that allows grid-snapping and more (<co>WIP</c> + <cp>Supporter-only</c>)
+ 
+#### <cp>Supporter Features</c>
+ * <cg>Better Warp Selection</c> that allows grid-snapping and more (<co>WIP</c>)
 
-### v6.8.0-alpha.2
+## v6.8.0-alpha.2
  * Allow modifying <cd>Mixed</c> values in the Group ID Popup (Editor Layers, Z Order, Channel) relatively
 
-### v6.8.0-alpha.1
+## v6.8.0-alpha.1
+ 
+#### <cp>Supporter Features</c>
  * <cp>Supporters</c> can now link their account to be <cb>listed in-game</c> & gain access to <cy>exclusive features</c> (in the future, features not yet done)
 
 ## v6.7.0
