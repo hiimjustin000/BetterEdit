@@ -5,6 +5,9 @@
  * Fix <cj>Build Helper</c> keybind actually creating a loop
  * Fix <co>32-bit Android crashing upon entering the editor</c>
 
+#### <cp>Supporter Features</c>
+ * WIP: <co>Scripting</c> with the <co>Swipe</c> language from v5
+
 ## v6.10.0-alpha.2
  * Some minor visual fixes (thank you to Alphalaneous!)
 
