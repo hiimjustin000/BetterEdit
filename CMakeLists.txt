@@ -15,7 +15,7 @@ endif()
 
 if (NOT SKIP_INCLUDING_LARGE_RESOURCES_FOR_SHORTER_BUILD_TIMES)
 	file(COPY_FILE
-		resources/support-popup/support-popup.png
+		resources/large-images/support-popup.png
 		resources/images/support-popup.png
 	)
 else()
