@@ -267,8 +267,8 @@ void be::tintObject(GameObject* obj, std::optional<ccColor3B> const& color) {
     }
 }
 
-void be::enableButton(CCMenuItemSpriteExtra* btn, bool enabled) {
-    btn->setEnabled(enabled);
+void be::enableButton(CCMenuItemSpriteExtra* btn, bool enabled, bool visualOnly) {
+    btn->setEnabled(enabled || visualOnly);
     if (auto spr = typeinfo_cast<CCRGBAProtocol*>(btn->getNormalImage())) {
         spr->setCascadeColorEnabled(true);
         spr->setCascadeOpacityEnabled(true);
@@ -276,8 +276,8 @@ void be::enableButton(CCMenuItemSpriteExtra* btn, bool enabled) {
         spr->setOpacity(enabled ? 255 : 200);
     }
 }
-void be::enableToggle(CCMenuItemToggler* toggle, bool enabled) {
-    toggle->setEnabled(enabled);
-    be::enableButton(toggle->m_onButton, enabled);
-    be::enableButton(toggle->m_offButton, enabled);
+void be::enableToggle(CCMenuItemToggler* toggle, bool enabled, bool visualOnly) {
+    toggle->setEnabled(enabled || visualOnly);
+    be::enableButton(toggle->m_onButton, enabled, visualOnly);
+    be::enableButton(toggle->m_offButton, enabled, visualOnly);
 }

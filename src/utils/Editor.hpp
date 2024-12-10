@@ -31,8 +31,8 @@ namespace be {
      */
     void tintObject(GameObject* obj, std::optional<ccColor3B> const& color);
 
-    void enableButton(CCMenuItemSpriteExtra* btn, bool enabled);
-    void enableToggle(CCMenuItemToggler* toggle, bool enabled);
+    void enableButton(CCMenuItemSpriteExtra* btn, bool enabled, bool visualOnly = false);
+    void enableToggle(CCMenuItemToggler* toggle, bool enabled, bool visualOnly = false);
 }
 
 //// More EditCommand options

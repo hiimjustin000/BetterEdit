@@ -248,9 +248,10 @@ struct $modify(ViewTabUI, EditorUI) {
         btns->addObject(this->createViewToggleGV("v_dur_line.png"_spr, "0058"));
         btns->addObject(this->createViewToggleGV("v_eff_line.png"_spr, "0043"));
         
+    #ifdef BETTEREDIT_PRO
         auto indAllToggle = this->createViewToggleMSV("v_indicators_all.png"_spr, "show-all-trigger-indicators");
         auto indToggle = this->createViewToggleMSV(
-            "v_indicators.png"_spr, "show-trigger-indicators", be::isProEnabled(),
+            "v_indicators.png"_spr, "show-trigger-indicators", HAS_PRO(),
             [indAllToggle](bool enabled) {
                 be::enableToggle(indAllToggle, enabled);
             }
@@ -258,11 +259,15 @@ struct $modify(ViewTabUI, EditorUI) {
         btns->addObject(indToggle);
         btns->addObject(indAllToggle);
 
-        // todo: add popup explaining why they're not available
-        if (!be::isProEnabled()) {
-            be::enableToggle(indToggle, false);
-            be::enableToggle(indAllToggle, false);
+        if (!HAS_PRO()) {
+            be::enableToggle(indToggle, false, true);
+            be::enableToggle(indAllToggle, false, true);
+            indToggle->setUserObject(CCString::create("<cj>Trigger Indicators</c>"));
+            indToggle->setTarget(this, menu_selector(ViewTabUI::onProOnlyFeature));
+            indAllToggle->setUserObject(CCString::create("<cj>Trigger Indicators</c>"));
+            indAllToggle->setTarget(this, menu_selector(ViewTabUI::onProOnlyFeature));
         }
+    #endif
 
         btns->addObject(this->createViewToggleGV("v_ground.png"_spr, "0037", [this](bool enable) {
             m_editorLayer->m_groundLayer->setVisible(enable);
@@ -327,6 +332,14 @@ struct $modify(ViewTabUI, EditorUI) {
             }
         }
         EditorUI::selectObjects(objs, ignoreFilters);
+    }
+
+    void onProOnlyFeature(CCObject* sender) {
+    #ifdef BETTEREDIT_PRO
+        pro::showProOnlyFeaturePopup(
+            static_cast<CCString*>(static_cast<CCNode*>(sender)->getUserObject())->getCString()
+        );
+    #endif
     }
 };
 
