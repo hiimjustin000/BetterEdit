@@ -4,6 +4,7 @@
 #include <Geode/binding/GameObject.hpp>
 #include <Geode/binding/ButtonSprite.hpp>
 #include <Geode/binding/EffectGameObject.hpp>
+#include <Geode/binding/LevelEditorLayer.hpp>
 #include <Geode/utils/cocos.hpp>
 #include <Geode/utils/string.hpp>
 #include <Geode/ui/TextInput.hpp>
@@ -41,6 +42,7 @@ struct MixedValuesConfig final {
     Type (*getDefault)(GameObject*);
     Type (*get)(GameObject*);
     Type (*set)(GameObject*, Type, Direction);
+    void (*useNextFreeValues)(GameObject*, std::set<T>&) = nullptr;
 };
 
 template <class T>
@@ -58,7 +60,7 @@ protected:
 protected:
     bool init(
         GameObject* obj, CCArray* objs, MixedValuesConfig<T> const& config,
-        const char* title, const char* arrowSpr, bool showNextFree
+        const char* title, const char* arrowSpr
     ) {
         if (!CCMenu::init())
             return false;
@@ -112,7 +114,7 @@ protected:
         m_arrowRightBtn->setID("arrow-right-button"_spr);
         this->addChildAtPosition(m_arrowRightBtn, Anchor::Right, ccp(-15, -10));
 
-        if (showNextFree) {
+        if (m_config.useNextFreeValues) {
             auto nextFreeSpr = CCSprite::createWithSpriteFrameName("GJ_plus2Btn_001.png");
             nextFreeSpr->setScale(.8f);
             m_nextFreeBtn = CCMenuItemSpriteExtra::create(
@@ -151,8 +153,8 @@ protected:
     }
     void onNextFree(CCObject*) {
         std::set<T> usedLayers;
-        for (auto obj : m_targets) {
-            usedLayers.insert(m_config.get(obj));
+        for (auto obj : CCArrayExt<GameObject*>(LevelEditorLayer::get()->m_objects)) {
+            m_config.useNextFreeValues(obj, usedLayers);
         }
         T nextFree;
         for (nextFree = m_config.limits.min; nextFree < m_config.limits.max; nextFree += 1) {
@@ -198,10 +200,10 @@ public:
     static MixedValuesInput* create(
         GameObject* obj, CCArray* objs,
         MixedValuesConfig<T> const& config,
-        const char* title, const char* arrowSpr, bool showNextFree
+        const char* title, const char* arrowSpr
     ) {
         auto ret = new MixedValuesInput();
-        if (ret && ret->init(obj, objs, config, title, arrowSpr, showNextFree)) {
+        if (ret && ret->init(obj, objs, config, title, arrowSpr)) {
             ret->autorelease();
             return ret;
         }
@@ -283,8 +285,12 @@ class $modify(SetGroupIDLayer) {
                     obj->m_editorLayer = value;
                     return value;
                 },
+                .useNextFreeValues = +[](GameObject* obj, std::set<short>& values) {
+                    values.insert(obj->m_editorLayer);
+                    values.insert(obj->m_editorLayer2);
+                },
             },
-            "Editor L", "GJ_arrow_02_001.png", true
+            "Editor L", "GJ_arrow_02_001.png"
         )->replace(m_editorLayerInput, m_mainLayer->querySelector("editor-layer-menu"));
         
         MixedValuesInput<short>::create(
@@ -300,8 +306,12 @@ class $modify(SetGroupIDLayer) {
                     obj->m_editorLayer2 = value;
                     return value;
                 },
+                .useNextFreeValues = +[](GameObject* obj, std::set<short>& values) {
+                    values.insert(obj->m_editorLayer);
+                    values.insert(obj->m_editorLayer2);
+                },
             },
-            "Editor L2", "GJ_arrow_03_001.png", true
+            "Editor L2", "GJ_arrow_03_001.png"
         )->replace(m_editorLayer2Input, m_mainLayer->querySelector("editor-layer-2-menu"));
         
         MixedValuesInput<int>::create(
@@ -332,7 +342,7 @@ class $modify(SetGroupIDLayer) {
                     return obj->m_zOrder;
                 },
             },
-            "Z Order", "GJ_arrow_02_001.png", false
+            "Z Order", "GJ_arrow_02_001.png"
         )->replace(m_zOrderInput, m_mainLayer->querySelector("z-order-menu"));
 
         if (m_orderInput) {
@@ -353,7 +363,7 @@ class $modify(SetGroupIDLayer) {
                         return value;
                     }
                 },
-                nullptr, "GJ_arrow_02_001.png", false
+                nullptr, "GJ_arrow_02_001.png"
             )->replace(m_orderInput, m_mainLayer->querySelector("channel-order-menu"));
         }
         if (m_channelInput) {
@@ -374,7 +384,7 @@ class $modify(SetGroupIDLayer) {
                         return value;
                     }
                 },
-                nullptr, "GJ_arrow_02_001.png", false
+                nullptr, "GJ_arrow_02_001.png"
             )->replace(m_channelInput, m_mainLayer->querySelector("channel-menu"));
         }
 

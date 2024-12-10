@@ -2,6 +2,7 @@
 
 ## v6.10.0-alpha.3
  * Add <cl>Create Loop</c> keybind
+ * Fix <cj>Next Free</c> not working for Editor Layers
  * Fix <cj>Build Helper</c> keybind actually creating a loop
  * Fix <co>32-bit Android crashing upon entering the editor</c>
 
