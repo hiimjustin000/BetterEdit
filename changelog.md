@@ -5,20 +5,17 @@
  * Fix <cj>Next Free</c> not working for Editor Layers
  * Fix <cj>Build Helper</c> keybind actually creating a loop
  * Fix <co>32-bit Android crashing upon entering the editor</c>
-
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * WIP: <co>Scripting</c> with the <co>Swipe</c> language from v5
 
 ## v6.10.0-alpha.2
  * Some minor visual fixes (thank you to Alphalaneous!)
-
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * <cj>Trigger Indicators</c> are now the same color as the targeting triggers & now show Center Groups
 
 ## v6.10.0-alpha.1
  * Make Alpha's mods only Suggested instead of Recommended (so they aren't auto-installed)
-
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * Add <cj>Trigger Indicators</c> (toggleable in <cc>View Tab</c>)
 
 ## v6.9.2
@@ -49,8 +46,7 @@
  * Add <cg>Alpha's Editor Mods</c> as Recommendations :3
  * Make the build tabs responsive to screen size (huge thank you to <cg>Alphalaneous</c>!)
  * Fix <cc>View Tab LDM</c> being applied outside the editor
- 
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * <cp>Supporters</c> can now link their account to be <cb>listed in-game</c>
 
 ## v6.8.0-beta.4
@@ -89,16 +85,14 @@
 
 ## v6.8.0-alpha.3
  * Add <cc>HSV Preview</c>
- 
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * <cg>Better Warp Selection</c> that allows grid-snapping and more (<co>WIP</c>)
 
 ## v6.8.0-alpha.2
  * Allow modifying <cd>Mixed</c> values in the Group ID Popup (Editor Layers, Z Order, Channel) relatively
 
 ## v6.8.0-alpha.1
- 
-#### <cp>Supporter Features</c>
+ * <cp>Supporter Features:</c>
  * <cp>Supporters</c> can now link their account to be <cb>listed in-game</c> & gain access to <cy>exclusive features</c> (in the future, features not yet done)
 
 ## v6.7.0
