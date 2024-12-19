@@ -1,5 +1,5 @@
 {
-	"geode": "4.0.1",
+	"geode": "4.1.0",
 	"version": "6.10.0-alpha.3",
 	"gd": {
 		"win": "2.2074",
@@ -211,14 +211,20 @@
 			"type": "string",
 			"one-of": ["None", "Selected Only", "All"],
 			"default": "Selected Only",
-			"name": "Dynamic Trigger Indicator Colors",
+			"name": "Trigger Indicators: Dynamic Colors",
 			"description": "Control whether <cj>Trigger Indicators</c> should be colored based on the trigger, or if they should just be white"
 		},
 		"trigger-indicators-color-objects": {
 			"type": "bool",
 			"default": false,
-			"name": "Trigger Indicator Color Selection",
+			"name": "Trigger Indicators: Color Selection",
 			"description": "Control whether <cj>Trigger Indicators</c> should also color the target objects, or only point to them via the line"
+		},
+		"trigger-indicators-blocky": {
+			"type": "bool",
+			"default": true,
+			"name": "Trigger Indicators: Blocky Lines",
+			"description": "Control whether <cj>Trigger Indicators</c> should draw a direct line to the target objects, or a blocky line that only takes 90-degree turns"
 		},
 		"wip-section": {
 			"type": "title",

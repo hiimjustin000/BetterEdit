@@ -18,20 +18,31 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "swipe",
-            "aliases": ["Swipe"],
-            "extensions": [".swipe"],
-            "configuration": "./language-configuration.json",
-            "icon": {
-                "dark": "./swipe.png",
-                "light": "./swipe.png"
+        "languages": [
+            {
+                "id": "swipe",
+                "aliases": [
+                    "Swipe"
+                ],
+                "extensions": [
+                    ".swipe"
+                ],
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "dark": "./swipe.png",
+                    "light": "./swipe.png"
+                }
             }
-        }],
-        "grammars": [{
-            "language": "swipe",
-            "scopeName": "source.swipe",
-            "path": "./syntaxes/swipe.tmLanguage.json"
-        }]
+        ],
+        "grammars": [
+            {
+                "language": "swipe",
+                "scopeName": "source.swipe",
+                "path": "./syntaxes/swipe.tmLanguage.json"
+            }
+        ]
+    },
+    "__metadata": {
+        "size": 120463
     }
 }
