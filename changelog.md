@@ -1,5 +1,8 @@
 # BetterEdit 6
 
+## v6.10.0-alpha.4
+ * Fix <cy>Layer Lock Button</c> sometimes being visible on All
+
 ## v6.10.0-alpha.3
  * Add <cl>Create Loop</c> keybind
  * Fix <cj>Next Free</c> not working for Editor Layers

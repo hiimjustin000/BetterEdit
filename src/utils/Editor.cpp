@@ -216,14 +216,6 @@ class $modify(HideUI, EditorUI) {
         EditorUI::showUI(show);
         UIShowEvent(this, show).post();
 
-        m_currentLayerLabel->setVisible(show);
-
-        auto lockBtn = static_cast<CCMenuItemSpriteExtra*>(
-            this->querySelector("layer-menu hjfod.betteredit/lock-layer")
-        );
-        if (lockBtn) {
-            lockBtn->setVisible(show);
-        }
         m_tabsMenu->setVisible(show && m_selectedMode == 2);
     }
 };

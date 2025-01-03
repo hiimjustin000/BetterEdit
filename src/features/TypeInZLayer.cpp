@@ -59,7 +59,7 @@ class $modify(TypeInUI, EditorUI) {
                 m_editorLayer->m_currentLayer = numFromString<int>(str).unwrapOr(-1);
             },
             [this](auto) {
-                this->updateLockBtn();
+                this->updateLockBtn(true);
             }
         );
         m_currentLayerLabel = proxy;
@@ -74,16 +74,16 @@ class $modify(TypeInUI, EditorUI) {
         static_cast<CCSprite*>(this->getChildByID("layer-locked-sprite"))->setOpacity(0);
 
         m_fields->onUIHide.setFilter(UIShowFilter(this));
-        m_fields->onUIHide.bind([this, layerLockBtn, nextFreeBtn](auto* ev) {
+        m_fields->onUIHide.bind([this, nextFreeBtn](auto* ev) {
             m_currentLayerLabel->setVisible(ev->show);
-            layerLockBtn->setVisible(ev->show);
             nextFreeBtn->setVisible(ev->show);
+            this->updateLockBtn(ev->show);
         });
         
         return true;
     }
 
-    void updateLockBtn() {
+    void updateLockBtn(bool show) {
         auto layerMenu = this->getChildByID("layer-menu");
         if (!layerMenu) return;
         auto lockBtn = static_cast<CCMenuItemSpriteExtra*>(layerMenu->getChildByID("lock-layer"_spr));
@@ -108,7 +108,7 @@ class $modify(TypeInUI, EditorUI) {
         lockBtn->setNormalImage(spr);
         spr->setAnchorPoint((layerLocked || onAll) ? ccp(.47f, .48f) : ccp(.5f, .2f));
 
-        lockBtn->setVisible(m_editorLayer->m_layerLockingEnabled && !onAll);
+        lockBtn->setVisible(show && m_editorLayer->m_layerLockingEnabled && !onAll);
         m_currentLayerLabel->setColor(layerLocked ? ccc3(255, 150, 0) : ccc3(255, 255, 255));
     }
 
@@ -131,12 +131,12 @@ class $modify(TypeInUI, EditorUI) {
         if (auto btn = this->querySelector("all-layers-button")) {
             btn->setVisible(true);
         }
-        this->updateLockBtn();
+        this->updateLockBtn(true);
     }
 
     $override
     void onLockLayer(CCObject* sender) {
         EditorUI::onLockLayer(sender);
-        this->updateLockBtn();
+        this->updateLockBtn(true);
     }
 };
