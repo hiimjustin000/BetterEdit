@@ -10,13 +10,17 @@
 #include <Geode/binding/GameManager.hpp>
 #include <Geode/binding/GJGroundLayer.hpp>
 #include <Geode/utils/cocos.hpp>
+#ifdef GEODE_IS_WINDOWS
 #include <geode.custom-keybinds/include/Keybinds.hpp>
+#endif
 #include <utils/Editor.hpp>
 #include <utils/HolyUB.hpp>
 #include <utils/Pro.hpp>
 
 using namespace geode::prelude;
+#ifdef GEODE_IS_WINDOWS
 using namespace keybinds;
+#endif
 
 template <class F>
 class CCFunction : public CCObject {
