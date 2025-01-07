@@ -22,6 +22,24 @@ using namespace geode::prelude;
 using namespace keybinds;
 #endif
 
+// EditButtonBar needs an array of CreateMenuItems,
+// so in order to prevent crashes due to memory overwrites,
+// we need to increase the size of the class
+class BEMenuItemToggler : public CCMenuItemToggler {
+private:
+    uint8_t m_padding[sizeof(CreateMenuItem) - sizeof(CCMenuItemToggler)];
+public:
+    static BEMenuItemToggler* create(CCNode* off, CCNode* on, CCObject* target, SEL_MenuHandler selector) {
+        auto ret = new BEMenuItemToggler();
+        if (ret && ret->init(off, on, target, selector)) {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+};
+
 template <class F>
 class CCFunction : public CCObject {
 protected:
@@ -108,7 +126,7 @@ struct $modify(ViewTabUI, EditorUI) {
     CCMenuItemToggler* createViewToggle(const char* frame, auto get, auto set) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
-        auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
+        auto toggler = BEMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
         toggler->setUserObject("getter", CCFunction<bool()>::create(get));
         toggler->setUserObject("setter", CCFunction<void(bool)>::create(set));
         return toggler;
@@ -116,7 +134,7 @@ struct $modify(ViewTabUI, EditorUI) {
     CCMenuItemToggler* createViewToggleGV(const char* frame, const char* gv, std::function<void(bool)> postSet = nullptr) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
-        auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
+        auto toggler = BEMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
         toggler->setUserObject("getter", CCFunction<bool()>::create([gv]() {
             return GameManager::get()->getGameVariable(gv);
         }));
@@ -132,7 +150,7 @@ struct $modify(ViewTabUI, EditorUI) {
     ) {
         auto off = createViewToggleSpr(frame, false);
         auto on  = createViewToggleSpr(frame, true);
-        auto toggler = CCMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
+        auto toggler = BEMenuItemToggler::create(off, on, this, menu_selector(ViewTabUI::onViewToggle));
         toggler->setUserObject("getter", CCFunction<bool()>::create([modSavedValue, defaultValue]() {
             return Mod::get()->template getSavedValue<bool>(modSavedValue, defaultValue);
         }));
@@ -314,6 +332,20 @@ struct $modify(ViewTabUI, EditorUI) {
             viewBtnBar->setVisible(m_selectedMode == 4);
         }
     }
+    
+    #ifdef GEODE_IS_MACOS // toggleMode is inlined into onPlaytest on macOS
+    $override
+    void onPlaytest(CCObject* sender) {
+        auto playbackMode = m_editorLayer->m_playbackMode;
+        EditorUI::onPlaytest(sender);
+        if (!m_isPaused && playbackMode != PlaybackMode::Playing) {
+            if (auto viewBtnBar = this->getChildByID("view-tab"_spr)) {
+                this->updateModeSprites();
+                viewBtnBar->setVisible(m_selectedMode == 4);
+            }
+        }
+    }
+    #endif
 
     $override
     void selectObject(GameObject* obj, bool filter) {
@@ -363,6 +395,14 @@ class $modify(EditorPauseLayer) {
         EditorPauseLayer::onResume(pSender);
         static_cast<ViewTabUI*>(EditorUI::get())->updateViewTab();
     }
+
+    #ifdef GEODE_IS_MACOS // onResume is inlined into keyBackClicked on macOS
+    $override
+    void keyBackClicked() {
+        EditorPauseLayer::keyBackClicked();
+        static_cast<ViewTabUI*>(EditorUI::get())->updateViewTab();
+    }
+    #endif
 };
 
 #ifdef GEODE_IS_WINDOWS

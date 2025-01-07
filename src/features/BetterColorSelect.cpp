@@ -245,7 +245,7 @@ class $modify(NewColorSelect, CustomizeObjectLayer) {
     }
 
 // todo: hooking this virtual crashes on Android? probably a TulipHook or loader issue
-#ifndef GEODE_IS_ANDROID
+#if !defined(GEODE_IS_ANDROID) && !defined(GEODE_IS_ARM_MAC)
     $override
     void colorSelectClosed(CCNode* target) {
         if (!Mod::get()->template getSettingValue<bool>("new-color-menu")) {
@@ -356,10 +356,9 @@ class $modify(NewColorSelect, CustomizeObjectLayer) {
         m_fields->modified = true;
     }
 
-    $override
-    void onClose(CCObject* sender) {
+    void saveColors() {
         if (!Mod::get()->template getSettingValue<bool>("new-color-menu")) {
-            return CustomizeObjectLayer::onClose(sender);
+            return;
         }
         // add selected color to recent list if it's not there and it's not 0
         if (
@@ -373,8 +372,33 @@ class $modify(NewColorSelect, CustomizeObjectLayer) {
             );
             *RECENT_COLOR_IDS.begin() = m_customColorChannel;
         }
+    }
+
+    $override
+    void onClose(CCObject* sender) {
+        saveColors();
         CustomizeObjectLayer::onClose(sender);
     }
+
+    #ifdef GEODE_IS_MACOS // onClose is inlined into keyBackClicked, onBreakApart, and onLiveEdit on macOS
+    $override
+    void keyBackClicked() {
+        saveColors();
+        CustomizeObjectLayer::keyBackClicked();
+    }
+
+    $override
+    void onBreakApart(CCObject* sender) {
+        if (m_targetObject) saveColors();
+        CustomizeObjectLayer::onBreakApart(sender);
+    }
+
+    $override
+    void onLiveEdit(CCObject* sender) {
+        if (m_targetObject) saveColors();
+        CustomizeObjectLayer::onLiveEdit(sender);
+    }
+    #endif
 
     void gotoPageWithChannel(int channel) {
         if (0 < channel && channel < 1000) {
@@ -639,3 +663,20 @@ class $modify(NewColorSelect, CustomizeObjectLayer) {
         return true;
     }
 };
+
+#ifdef GEODE_IS_MACOS // we need to manually hook the keyBackClicked virtual offset function
+#define CustomizeObjectLayer_keyBackClicked_336 base::get() + GEODE_ARM_MAC(0x19ebec) GEODE_INTEL_MAC(0x1e77d0)
+void CustomizeObjectLayer_keyBackClicked(void* self) {
+    reinterpret_cast<NewColorSelect*>(reinterpret_cast<uintptr_t>(self) - 0x150)->saveColors();
+    reinterpret_cast<void(*)(void*)>(CustomizeObjectLayer_keyBackClicked_336)(self);
+}
+
+$execute {
+    (void) Mod::get()->hook(
+        reinterpret_cast<void*>(CustomizeObjectLayer_keyBackClicked_336),
+        &CustomizeObjectLayer_keyBackClicked,
+        "CustomizeObjectLayer::keyBackClicked (+0x150)",
+        tulip::hook::TulipConvention::Thiscall
+    );
+}
+#endif
